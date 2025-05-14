@@ -1,0 +1,8 @@
+crewai
+firecrawl
+qdrant-client
+sentence-transformers
+qwen
+openai  # (if using fallback)
+langchain
+python-dotenv
