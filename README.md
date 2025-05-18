@@ -1,50 +1,67 @@
-# Agentic RAG system powered by Qwen, CrewAI, Firecrawl, and Qdrant
-🧠 What Does QwenRag Do?
-QwenRag is an Agentic RAG system — a smarter, more dynamic version of Retrieval-Augmented Generation — that uses multiple AI agents working together to answer complex questions using real-time web data and local memory.
+# QwenRag: Agentic RAG System Powered by Qwen, CrewAI, Firecrawl, and Qdrant
 
-💬 In simple terms:
-“It’s like ChatGPT with a brain team. Each AI agent has a specific job — some search the web, some fetch from memory, others judge the answers — and they all collaborate to give the best possible answer.”
+## What is QwenRag?
 
-📌 Example
-You ask:
-"Summarize the latest news on electric vehicles and give investment insights."
+QwenRag is an intelligent Agentic Retrieval-Augmented Generation (RAG) system. It goes beyond traditional RAG by using a team of collaborative AI agents, each assigned a specific role in solving complex queries. The system integrates real-time web search and long-term memory through vector databases to generate high-quality, context-aware responses.
 
-Here’s what happens inside QwenRag:
+## How It Works
 
-📝 Query Rewriter Agent
-Rewrites your question to be clearer and search-friendly.
+When a user inputs a question, QwenRag follows a dynamic multi-step process:
 
-🔍 Info Assessor Agent
-Decides:
+1. **Query Rewriter Agent**  
+   Refines the user query to improve clarity and search effectiveness.
 
-“Do I already know enough?”
-If not…
+2. **Information Assessor Agent**  
+   Determines whether the system already has enough knowledge to answer or needs to retrieve more information.
 
-🌐 Retriever Agent
-Uses Firecrawl to search the live web for news articles
-and Qdrant to fetch info from stored documents.
+3. **Retriever Agent**  
+   Searches the live web using Firecrawl and queries stored knowledge from Qdrant, a high-performance vector database.
 
-🧠 Response Generator Agent
-Uses Qwen, a powerful local LLM, to read all the data and write a high-quality response.
+4. **Response Generator Agent**  
+   Synthesizes a complete and well-structured response using the Qwen model accessed via OpenRouter API.
 
-✅ Evaluator Agent
-Checks if the answer is accurate and complete.
-If not, it loops the process again.
+5. **Response Evaluator Agent**  
+   Reviews the response to ensure accuracy and completeness. If needed, it triggers another retrieval and generation cycle.
 
-🔄 What Makes QwenRag Special?
-It plans, retrieves, generates, and refines — like a team of mini-AIs.
+This iterative architecture allows QwenRag to deliver deeper, more accurate, and more reliable answers compared to traditional RAG systems.
 
-Unlike normal RAG systems, it doesn’t stop after one shot. It iterates until it’s confident.
+## Why QwenRag is Unique
 
-It uses real-time data and memory, not just static training.
+- Built using multiple goal-oriented agents powered by CrewAI.
+- Combines live web search with persistent memory through Qdrant.
+- Integrates seamlessly with OpenRouter to access Qwen, a state-of-the-art LLM.
+- Uses a recursive reasoning loop for refining responses instead of stopping at a single generation.
+- Modular and extensible architecture designed for flexibility and scale.
 
-🤖 Real-World Use Cases
-Smart research assistants
+## Use Cases
 
-Market analysis bots
+- Research assistants for technical, scientific, or academic topics
+- Market trend analysis and business intelligence
+- AI-powered writing and summarization tools
+- Automated Q&A systems and expert advisors
+- Troubleshooting assistants for developers and engineers
 
-AI journalists or writers
+## Project Structure Overview
 
-Code troubleshooting bots
+```
+QwenRag/
+├── agents/                  # All CrewAI agents and their definitions
+├── retriever/               # Web and vector-based search utilities
+├── vector_db/               # Qdrant client and vector embedding tools
+├── llm/                     # LLM provider logic for OpenRouter or OpenAI
+├── main.py                  # Main execution script
+├── requirements.txt         # Python dependencies
+└── README.md                # Project documentation
+```
 
-Decision-making copilots for business
+## Getting Started
+
+1. Clone the repository
+2. Create a virtual environment using Python 3.11
+3. Install dependencies from `requirements.txt`
+4. Add your API keys to a `.env` file
+5. Run `python main.py` and start querying
+
+## License
+
+This project is for educational and experimental use.
