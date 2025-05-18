@@ -7,9 +7,20 @@ from agents.retriever_agent import retriever_agent
 from agents.response_generator import response_generator
 from agents.response_evaluator import response_evaluator
 
+# Optional: Add some seed documents to the Qdrant vector DB
+from vector_db.qdrant_client import add_to_qdrant
+
 def main():
     print("🤖 Welcome to QwenRag: Your Agentic RAG System")
     user_query = input("🧠 Ask me anything: ")
+
+    # Optional: Sample documents to populate the vector DB
+    sample_docs = [
+        "Agentic RAG allows dynamic, multi-step reasoning using retrieval and planning agents.",
+        "Qwen is a multilingual, locally run LLM developed by Alibaba.",
+        "Qdrant is an open-source vector database used for semantic search and storage."
+    ]
+    add_to_qdrant(sample_docs)
 
     # Define tasks for each agent
     task1 = Task(
