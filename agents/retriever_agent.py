@@ -22,5 +22,6 @@ retriever_agent = CrewAgent(
         "You are an expert in both real-time web scraping and using a local knowledge base to provide factual, well-supported context."
     ),
     tools=[web_search_tool, qdrant_tool],
+    allow_llm=True,
     verbose=True
 )

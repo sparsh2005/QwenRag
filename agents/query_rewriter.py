@@ -8,5 +8,6 @@ query_rewriter = CrewAgent(
     backstory=(
         "You're an expert at refining natural language queries into more specific and useful formats for AI understanding."
     ),
+    allow_llm=True,
     verbose=True
 )

@@ -6,5 +6,6 @@ info_assessor = CrewAgent(
     backstory=(
         "You assess whether the current knowledge is sufficient or if more context must be retrieved from external sources."
     ),
+    allow_llm=True,
     verbose=True
 )

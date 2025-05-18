@@ -6,6 +6,7 @@ response_generator = CrewAgent(
     backstory=(
         "You're an expert language model capable of synthesizing complex knowledge into coherent responses."
     ),
+    allow_llm=True,
     verbose=True
 )
 

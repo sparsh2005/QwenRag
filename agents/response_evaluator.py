@@ -6,6 +6,7 @@ response_evaluator = CrewAgent(
     backstory=(
         "You're a quality assurance agent who ensures the final output is clear, useful, and accurate."
     ),
+    allow_llm=True,
     verbose=True
 )
 
