@@ -14,9 +14,10 @@ from agents.response_evaluator import response_evaluator
 # Optional: Add some seed documents to the Qdrant vector DB
 from vector_db.qdrant_client import add_to_qdrant
 
-def main():
+def main(user_query=None):
+    if user_query is None:
+        user_query = input("🧠 Ask me anything: ")
     print("🤖 Welcome to QwenRag: Your Agentic RAG System")
-    user_query = input("🧠 Ask me anything: ")
 
     # Optional: Sample documents to populate the vector DB
     sample_docs = [
