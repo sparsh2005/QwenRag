@@ -1,11 +1,18 @@
-from crewai import CrewAgent
+from crewai import Agent
+import os
 
-info_assessor = CrewAgent(
-    role="Information Assessor",
-    goal="Determine whether external information is needed to complete the task.",
+info_assessor = Agent(
+    role="Information Assessment Agent",
+    goal="Evaluate whether additional information is needed for each sub-query",
     backstory=(
-        "You assess whether the current knowledge is sufficient or if more context must be retrieved from external sources."
+        "You are an expert at determining what information is needed to answer questions. "
+        "You can quickly assess whether we have enough context or need to search for more."
     ),
     allow_llm=True,
-    verbose=True
+    verbose=True,
+    llm_config={
+        "provider": "openrouter",
+        "model": "qwen/qwen-72b-chat",
+        "api_key": os.getenv("OPENROUTER_API_KEY")
+    }
 )

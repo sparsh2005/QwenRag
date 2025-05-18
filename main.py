@@ -1,7 +1,11 @@
+from dotenv import load_dotenv
+load_dotenv()
 from crewai import Crew, Task
+import os
 
 # Import agents
 from agents.query_rewriter import query_rewriter
+from agents.planning_agent import planning_agent
 from agents.info_assessor import info_assessor
 from agents.retriever_agent import retriever_agent
 from agents.response_generator import response_generator
@@ -24,30 +28,36 @@ def main():
 
     # Define tasks for each agent
     task1 = Task(
-        description=f"Rewrite the user's query for better retrieval. Original query: {user_query}",
-        expected_output="A refined, specific version of the query",
+        description=f"Decompose the user's query into sub-queries. Original query: {user_query}",
+        expected_output="A list of focused sub-queries",
         agent=query_rewriter
     )
 
     task2 = Task(
-        description="Evaluate whether more external information is needed for the refined query",
-        expected_output="YES or NO, along with reasoning",
-        agent=info_assessor
+        description="Create a retrieval strategy for each sub-query",
+        expected_output="A plan specifying which retrieval methods to use for each sub-query",
+        agent=planning_agent
     )
 
     task3 = Task(
-        description="If more info is needed, retrieve relevant data from the web or a vector DB",
-        expected_output="Relevant information that helps answer the refined query",
-        agent=retriever_agent
+        description="Evaluate whether more external information is needed for each sub-query",
+        expected_output="YES or NO for each sub-query, along with reasoning",
+        agent=info_assessor
     )
 
     task4 = Task(
-        description="Use the refined query and retrieved context (if any) to generate a full response",
-        expected_output="A complete and useful answer to the original user query",
-        agent=response_generator
+        description="Retrieve relevant data for each sub-query based on the plan",
+        expected_output="Relevant information for each sub-query",
+        agent=retriever_agent
     )
 
     task5 = Task(
+        description="Synthesize all retrieved information into a coherent response",
+        expected_output="A complete and well-structured answer to the original query",
+        agent=response_generator
+    )
+
+    task6 = Task(
         description="Review and critique the generated response for completeness and quality",
         expected_output="Improved version of the response if needed",
         agent=response_evaluator
@@ -57,13 +67,19 @@ def main():
     crew = Crew(
         agents=[
             query_rewriter,
+            planning_agent,
             info_assessor,
             retriever_agent,
             response_generator,
             response_evaluator
         ],
-        tasks=[task1, task2, task3, task4, task5],
-        verbose=True
+        tasks=[task1, task2, task3, task4, task5, task6],
+        verbose=True,
+        llm_config={
+            "provider": "openrouter",
+            "model": "qwen/qwen-72b-chat",
+            "api_key": os.getenv("OPENROUTER_API_KEY")
+        }
     )
 
     final_output = crew.kickoff()

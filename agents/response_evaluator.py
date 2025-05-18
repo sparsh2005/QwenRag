@@ -1,12 +1,19 @@
-from crewai import CrewAgent
+from crewai import Agent
+import os
 
-response_evaluator = CrewAgent(
-    role="Response Evaluator",
-    goal="Review and evaluate the final response to ensure it is accurate, complete, and meets the user's goal.",
+response_evaluator = Agent(
+    role="Response Evaluation Agent",
+    goal="Review and improve the generated response for quality and completeness",
     backstory=(
-        "You're a quality assurance agent who ensures the final output is clear, useful, and accurate."
+        "You are an expert at evaluating and improving responses. "
+        "You ensure answers are complete, accurate, and well-structured."
     ),
     allow_llm=True,
-    verbose=True
+    verbose=True,
+    llm_config={
+        "provider": "openrouter",
+        "model": "qwen/qwen-72b-chat",
+        "api_key": os.getenv("OPENROUTER_API_KEY")
+    }
 )
 

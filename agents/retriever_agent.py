@@ -1,5 +1,5 @@
-from crewai import CrewAgent
-from crewai_tools import Tool
+from crewai import Agent
+from crewai.tools.base_tool import Tool
 from retriever.firecrawl_retriever import search_web
 from retriever.qdrant_retriever import search_local_knowledge
 
@@ -15,7 +15,7 @@ qdrant_tool = Tool(
     description="Search local knowledge base (vector database) for relevant context"
 )
 
-retriever_agent = CrewAgent(
+retriever_agent = Agent(
     role="Retriever Agent",
     goal="Fetch relevant information from either the web or the local vector DB",
     backstory=(
